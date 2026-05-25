@@ -1,30 +1,48 @@
 import { useState } from "react";
-import "./Input.css";
 
-const Input = ({ label, name, value, onChange, type = "text" }) => {
+const Input = ({ label, type, name, value, onChange, placeholder }) => {
   const [show, setShow] = useState(false);
-  
-  // Handles the actual input type for the show/hide functionality
-  const inputType = type === "password" && show ? "text" : type;
+  const isPassword = type === "password";
 
   return (
-    <div className="input-group">
-      <label className="input-label">{label}</label>
-      <div className="input-wrapper">
-        <input 
-          type={inputType} 
-          name={name} 
-          value={value} 
-          onChange={onChange} 
-          className="custom-input" 
-          style={{ paddingRight: type === "password" ? "60px" : "10px" }} 
-          required 
+    <div style={{ marginBottom: "15px", textAlign: "left" }}>
+      {label && <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>{label}</label>}
+      
+      {/* 👇 Added 'password-input-wrapper' class and position relative */}
+      <div className={isPassword ? "password-input-wrapper" : ""} style={{ position: "relative", width: "100%" }}>
+        
+        <input
+          type={isPassword && show ? "text" : type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          style={{ 
+            width: "100%", 
+            padding: "10px", 
+            paddingRight: isPassword ? "60px" : "10px", // Leaves space for the button!
+            borderRadius: "4px", 
+            border: "1px solid #ccc" 
+          }}
         />
-        {type === "password" && (
-          <button 
-            type="button" 
-            onClick={() => setShow(!show)} 
-            className="toggle-btn"
+        
+        {isPassword && (
+          <button
+            type="button"
+            className="show-hide-btn" // 👈 Added this specific class
+            onClick={() => setShow(!show)}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "transparent",
+              border: "none",
+              color: "#007bff",
+              cursor: "pointer",
+              fontWeight: "bold",
+              padding: "0"
+            }}
           >
             {show ? "Hide" : "Show"}
           </button>

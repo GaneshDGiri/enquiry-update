@@ -13,3 +13,44 @@
     cursor: pointer; 
     margin-top: 10px; 
 }
+.enquiry-container { 
+    width: 100%; 
+    max-width: 450px; 
+    margin: 40px auto; 
+}
+
+.btn-success { 
+    width: 100%; 
+    padding: 12px; 
+    background: #28a745; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-top: 10px; 
+}
+
+/* 👇 Add these rules for the File Upload styling */
+.file-input {
+  padding: 8px;
+  cursor: pointer;
+  color: #fff; /* Makes the text next to the button white */
+}
+
+.file-input::file-selector-button {
+  background-color: #555;
+  color: #ffffff;
+  border: 1px solid #777;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 15px;
+  font-weight: bold;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.file-input::file-selector-button:hover {
+  background-color: #007bff;
+  border-color: #007bff;
+}

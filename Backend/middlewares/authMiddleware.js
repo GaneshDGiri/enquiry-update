@@ -1,40 +1,51 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-exports.protect = async (req, res, next) => {
-  let token = req.headers.authorization;
-
-  if (token && token.startsWith("Bearer")) {
+// 1. Protect Middleware (Ensures user/admin has a valid token)
+const protect = async (req, res, next) => {
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
     try {
-      token = token.split(" ")[1];
+      token = req.headers.authorization.split(" ")[1];
       
-      // First try to verify as a regular user
-      try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findById(decoded.id).select("-password");
-        req.user.role = "user";
-        return next();
-      } catch (userErr) {
-        // If user verification fails, try admin verification
-        const decodedAdmin = jwt.verify(token, process.env.ADMIN_SECRET);
-        req.user = { role: "admin" };
+      // Check if it's the Admin token
+      if (token === process.env.ADMIN_SECRET || jwt.decode(token)?.id === "admin") {
+        req.user = { id: "admin", role: "admin" };
         return next();
       }
+
+      // Otherwise, verify User token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select("-password");
+      next();
     } catch (error) {
       res.status(401);
-      return next(new Error("Not authorized, token failed"));
+      throw new Error("Not authorized, token failed");
     }
+  } else {
+    res.status(401);
+    throw new Error("Not authorized, no token");
   }
-
-  res.status(401);
-  next(new Error("Not authorized, no token provided"));
 };
 
-exports.adminOnly = (req, res, next) => {
+// 2. Admin Only Middleware
+const adminOnly = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
     next();
   } else {
     res.status(403);
-    next(new Error("Access denied: Admin privileges required"));
+    throw new Error("Not authorized as an admin");
   }
 };
+
+// 3. User Only Middleware
+const userOnly = (req, res, next) => {
+  if (req.user && req.user.role !== "admin") {
+    next();
+  } else {
+    res.status(403);
+    throw new Error("Admins cannot perform this user action");
+  }
+};
+
+module.exports = { protect, adminOnly, userOnly };

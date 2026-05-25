@@ -24,7 +24,7 @@ const AdminLogin = () => {
 
   return (
     <div className="admin-login-container">
-      <h2 style={{textAlign: "center", marginBottom: "20px"}}>Admin Login</h2>
+      <h2 style={{textAlign: "center", marginBottom: "20px", color: "red"}}>Admin Login</h2>
       <Form onSubmit={handleSubmit}>
         <Input label="Email" name="email" value={formData.email} onChange={handleChange} />
         <Input label="Password" name="password" type="password" value={formData.password} onChange={handleChange} />

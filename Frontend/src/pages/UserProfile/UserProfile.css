@@ -1,0 +1,41 @@
+/* frontend/src/pages/UserProfile/UserProfile.css */
+.profile-container { 
+    width: 100%; 
+    max-width: 450px; 
+    margin: 40px auto; 
+    padding: 0 15px;
+}
+
+.profile-email-display {
+    text-align: center; 
+    margin-bottom: 20px; 
+    color: #888;
+    font-size: 14px;
+}
+
+.password-warning-box {
+    padding: 10px 15px; 
+    background: #332b00; /* Dark yellow/gold for dark theme */
+    border-left: 4px solid #ffc107; 
+    margin-bottom: 15px; 
+    font-size: 13px;
+    color: #ffda6a;
+    border-radius: 0 4px 4px 0;
+}
+
+.btn-update { 
+    width: 100%; 
+    padding: 12px; 
+    background: #007bff; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-top: 10px; 
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-update:hover {
+    background: #0056b3;
+}

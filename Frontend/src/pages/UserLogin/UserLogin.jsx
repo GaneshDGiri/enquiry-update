@@ -32,7 +32,7 @@ const UserLogin = () => {
 
   return (
     <div className="login-container">
-      <h2 style={{textAlign: "center", marginBottom: "20px"}}>User Login</h2>
+      <h2 style={{textAlign: "center", marginBottom: "20px", color: "red"}}>User Login</h2>
       <Form onSubmit={handleSubmit}>
         <Input label="Email" name="email" value={formData.email} onChange={handleChange} />
         <Input label="Password" name="password" type="password" value={formData.password} onChange={handleChange} />
